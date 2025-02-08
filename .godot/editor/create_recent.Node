@@ -1,2 +1,9 @@
+AnimationPlayer
+Sprite2D
+Node2D
+PlayerState
 CollisionShape2D
+GirlState
+Node
 CharacterBody2D
+BoyState

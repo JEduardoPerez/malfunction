@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dynqohq7nxad2"]
+
+[ext_resource type="Script" path="res://entity/boy/boy_npc.gd" id="1_qux2p"]
+[ext_resource type="Script" path="res://utils/state_machine.gd" id="2_jp1u7"]
+[ext_resource type="Script" path="res://entity/boy/states/boy_idle.gd" id="3_d85gx"]
+[ext_resource type="Script" path="res://entity/boy/states/boy_celebrate.gd" id="4_o7wdf"]
+[ext_resource type="Script" path="res://entity/boy/states/boy_cry.gd" id="5_0apmo"]
+
+[node name="BoyNPC" type="CharacterBody2D"]
+script = ExtResource("1_qux2p")
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource("2_jp1u7")
+
+[node name="Idle" type="Node" parent="FSM"]
+script = ExtResource("3_d85gx")
+
+[node name="Celebrate" type="Node" parent="FSM"]
+script = ExtResource("4_o7wdf")
+
+[node name="Cry" type="Node" parent="FSM"]
+script = ExtResource("5_0apmo")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

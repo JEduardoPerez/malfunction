@@ -1,11 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://yb6b0xwe8btf"]
+[gd_scene load_steps=10 format=3 uid="uid://yb6b0xwe8btf"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_555tw"]
+[ext_resource type="Script" path="res://utils/state_machine.gd" id="2_7ixcf"]
+[ext_resource type="Script" path="res://entity/player/states/player_idle.gd" id="3_u7grw"]
+[ext_resource type="Script" path="res://entity/player/states/player_walk.gd" id="4_6u3cd"]
+[ext_resource type="Script" path="res://entity/player/states/player_throw.gd" id="5_k0jqn"]
+[ext_resource type="Script" path="res://entity/player/states/player_fixing.gd" id="6_l4154"]
+
+[sub_resource type="Animation" id="Animation_fxw41"]
+resource_name = "idle_down"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0768u"]
+_data = {
+"idle_down": SubResource("Animation_fxw41")
+}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j7lso"]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_555tw")
+
+[node name="FSM" type="Node" parent="."]
+script = ExtResource("2_7ixcf")
+
+[node name="Idle" type="Node" parent="FSM"]
+script = ExtResource("3_u7grw")
+
+[node name="Walk" type="Node" parent="FSM"]
+script = ExtResource("4_6u3cd")
+
+[node name="Throw" type="Node" parent="FSM"]
+script = ExtResource("5_k0jqn")
+
+[node name="Fixing" type="Node" parent="FSM"]
+script = ExtResource("6_l4154")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0768u")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_j7lso")
