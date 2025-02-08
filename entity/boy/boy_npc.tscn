@@ -1,12 +1,99 @@
-[gd_scene load_steps=6 format=3 uid="uid://dynqohq7nxad2"]
+[gd_scene load_steps=14 format=3 uid="uid://dynqohq7nxad2"]
 
 [ext_resource type="Script" path="res://entity/boy/boy_npc.gd" id="1_qux2p"]
 [ext_resource type="Script" path="res://utils/state_machine.gd" id="2_jp1u7"]
 [ext_resource type="Script" path="res://entity/boy/states/boy_idle.gd" id="3_d85gx"]
 [ext_resource type="Script" path="res://entity/boy/states/boy_celebrate.gd" id="4_o7wdf"]
 [ext_resource type="Script" path="res://entity/boy/states/boy_cry.gd" id="5_0apmo"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="6_vey1a"]
+[ext_resource type="Texture2D" uid="uid://cnxhoh476t7nk" path="res://assets/art/boy_npc.png" id="6_vqxx8"]
 
-[node name="BoyNPC" type="CharacterBody2D"]
+[sub_resource type="Animation" id="Animation_2cce5"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_y7myn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_apq8k"]
+resource_name = "celebrate"
+length = 0.3
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [8, 9, 10]
+}
+
+[sub_resource type="Animation" id="Animation_07q4u"]
+resource_name = "cry"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utpg6"]
+_data = {
+"RESET": SubResource("Animation_y7myn"),
+"celebrate": SubResource("Animation_apq8k"),
+"cry": SubResource("Animation_07q4u"),
+"idle": SubResource("Animation_2cce5")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3hr7x"]
+radius = 5.0
+height = 14.0
+
+[node name="BoyNPC" type="CharacterBody2D" groups=["NPC"]]
+position = Vector2(91, 81)
+collision_layer = 4
+collision_mask = 0
+motion_mode = 1
 script = ExtResource("1_qux2p")
 
 [node name="FSM" type="Node" parent="."]
@@ -23,8 +110,23 @@ script = ExtResource("5_0apmo")
 
 [node name="Body" type="Node2D" parent="."]
 
+[node name="Shadow" type="Sprite2D" parent="Body"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-0.5, -1)
+texture = ExtResource("6_vey1a")
+
 [node name="Sprite2D" type="Sprite2D" parent="Body"]
+texture = ExtResource("6_vqxx8")
+offset = Vector2(0, -16)
+hframes = 4
+vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_utpg6")
+}
+speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_3hr7x")

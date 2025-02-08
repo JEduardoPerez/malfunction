@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://yb6b0xwe8btf"]
+[gd_scene load_steps=14 format=3 uid="uid://yb6b0xwe8btf"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_555tw"]
 [ext_resource type="Script" path="res://utils/state_machine.gd" id="2_7ixcf"]
@@ -7,22 +7,43 @@
 [ext_resource type="Script" path="res://entity/player/states/player_throw.gd" id="5_k0jqn"]
 [ext_resource type="Script" path="res://entity/player/states/player_fixing.gd" id="6_l4154"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wn3ei"]
+size = Vector2(16, 24)
+
 [sub_resource type="Animation" id="Animation_fxw41"]
 resource_name = "idle_down"
+step = 0.1
+
+[sub_resource type="Animation" id="Animation_mwgqu"]
+resource_name = "idle_up"
+step = 0.1
+
+[sub_resource type="Animation" id="Animation_pxred"]
+resource_name = "walk_down"
+step = 0.1
+
+[sub_resource type="Animation" id="Animation_0y6uy"]
+resource_name = "walk_up"
+step = 0.1
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0768u"]
 _data = {
-"idle_down": SubResource("Animation_fxw41")
+"idle_down": SubResource("Animation_fxw41"),
+"idle_up": SubResource("Animation_mwgqu"),
+"walk_down": SubResource("Animation_pxred"),
+"walk_up": SubResource("Animation_0y6uy")
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j7lso"]
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
+motion_mode = 1
 script = ExtResource("1_555tw")
 
-[node name="FSM" type="Node" parent="."]
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_7ixcf")
+initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="FSM"]
 script = ExtResource("3_u7grw")
@@ -39,6 +60,11 @@ script = ExtResource("6_l4154")
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Body"]
+texture = SubResource("PlaceholderTexture2D_wn3ei")
+
+[node name="ObjectDetector" type="RayCast2D" parent="."]
+target_position = Vector2(24, 0)
+collision_mask = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
