@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://qmqg5xcn6d0o"]
+
+[ext_resource type="Texture2D" uid="uid://dn2cwpcqkkjlp" path="res://assets/art/map/turtle.png" id="1_yuxxy"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="2_m28e2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh04e"]
+atlas = ExtResource("1_yuxxy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80pyf"]
+atlas = ExtResource("1_yuxxy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_113ft"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qh04e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80pyf")
+}],
+"loop": true,
+"name": &"animate",
+"speed": 5.0
+}]
+
+[node name="Turtle" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_113ft")
+animation = &"animate"
+autoplay = "animate"
+frame_progress = 0.573269
+offset = Vector2(0, -6)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+scale = Vector2(1.6, 1.2)
+texture = ExtResource("2_m28e2")
+offset = Vector2(-0.5, -1)

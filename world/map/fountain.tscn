@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc5k88laoni21"]
+
+[ext_resource type="Texture2D" uid="uid://crt6x6pvnlnd" path="res://assets/art/map/fountain.png" id="1_w8oou"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="2_d6iua"]
+
+[node name="Fountain" type="Sprite2D"]
+texture = ExtResource("1_w8oou")
+offset = Vector2(-1, -27.5)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+scale = Vector2(1.8, 1.2)
+texture = ExtResource("2_d6iua")
+offset = Vector2(-0.5, -1)

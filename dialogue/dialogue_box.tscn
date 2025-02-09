@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=3 uid="uid://cfjmbxpu122ud"]
+
+[ext_resource type="Script" path="res://dialogue/dialogue_box.gd" id="1_vsmll"]
+[ext_resource type="Texture2D" uid="uid://b2egfepubapfb" path="res://assets/art/dialogue_box.png" id="2_bo4h4"]
+[ext_resource type="FontFile" uid="uid://dxxaym28p8pa4" path="res://assets/font/Early GameBoy.ttf" id="3_8er75"]
+[ext_resource type="Texture2D" uid="uid://u7mw4ww2heba" path="res://assets/art/portrait_boy.png" id="3_btb1g"]
+[ext_resource type="Texture2D" uid="uid://biyj05wtcyrcm" path="res://assets/art/portrait_boy_happy.png" id="4_4t3ab"]
+[ext_resource type="Texture2D" uid="uid://w8lq8p6imvly" path="res://assets/art/portrait.png" id="4_ow15n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nc4qv"]
+font = ExtResource("3_8er75")
+font_size = 8
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_56d22"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wpupg"]
+resource_name = "dialogue_in"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kyms1"]
+resource_name = "dialogue_out"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nmnc5"]
+_data = {
+"RESET": SubResource("Animation_56d22"),
+"dialogue_in": SubResource("Animation_wpupg"),
+"dialogue_out": SubResource("Animation_kyms1")
+}
+
+[node name="DialogueBox" type="CanvasLayer"]
+script = ExtResource("1_vsmll")
+portrait_dad = ExtResource("4_ow15n")
+portrait_boy = ExtResource("3_btb1g")
+portrait_boy_happy = ExtResource("4_4t3ab")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 320.0
+offset_bottom = 40.0
+texture = ExtResource("2_bo4h4")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 3
+
+[node name="DisplayLabel" type="Label" parent="TextureRect/MarginContainer"]
+custom_minimum_size = Vector2(248, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_nc4qv")
+autowrap_mode = 3
+visible_characters_behavior = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/margin_right = 8
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/MarginContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("4_ow15n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nmnc5")
+}
+
+[node name="CharacterTimer" type="Timer" parent="."]
+wait_time = 0.06

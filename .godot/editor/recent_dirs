@@ -1,6 +1,14 @@
-res://entity/player/states
+res://world/map
+res://assets/art/map
 res://entity/girl/states
+res://assets/art
+res://world
+res://ui
+res://dialogue
+res://entity/dog/states
 res://utils
+res://entity/dog
+res://entity/player/states
 res://entity/girl
 res://entity/boy/states
 res://entity/boy

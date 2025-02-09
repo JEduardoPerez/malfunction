@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba6d6ardcmabv"]
+
+[ext_resource type="Texture2D" uid="uid://mu4rhu8qqp7x" path="res://assets/art/map/bush1.png" id="1_j0ijt"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="2_4jw65"]
+
+[node name="Bush" type="Sprite2D"]
+texture = ExtResource("1_j0ijt")
+offset = Vector2(0, -28)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+position = Vector2(0, -1)
+scale = Vector2(6, 2)
+texture = ExtResource("2_4jw65")
+offset = Vector2(0, -1)

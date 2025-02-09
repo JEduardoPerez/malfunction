@@ -1,0 +1,112 @@
+[gd_scene load_steps=12 format=3 uid="uid://bvvc58htxgchg"]
+
+[ext_resource type="Script" path="res://entity/dog/dog.gd" id="1_706n7"]
+[ext_resource type="Script" path="res://utils/state_machine.gd" id="2_le3su"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="3_kecxj"]
+[ext_resource type="Script" path="res://entity/dog/states/dog_idle.gd" id="3_lqry0"]
+[ext_resource type="Texture2D" uid="uid://skqst1odghvo" path="res://assets/art/runnindog.png" id="4_dlkrt"]
+[ext_resource type="Script" path="res://entity/dog/states/dog_run.gd" id="4_neixe"]
+
+[sub_resource type="Animation" id="Animation_0cf6n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_m7hvk"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_lp2mo"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0amuc"]
+_data = {
+"RESET": SubResource("Animation_0cf6n"),
+"idle": SubResource("Animation_m7hvk"),
+"run": SubResource("Animation_lp2mo")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q86ed"]
+radius = 6.0
+height = 22.0
+
+[node name="Dog" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("1_706n7")
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_le3su")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FSM"]
+script = ExtResource("3_lqry0")
+
+[node name="Run" type="Node" parent="FSM"]
+script = ExtResource("4_neixe")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Shadow" type="Sprite2D" parent="Body"]
+modulate = Color(1, 1, 1, 0.392157)
+scale = Vector2(1.8, 1.2)
+texture = ExtResource("3_kecxj")
+offset = Vector2(-1, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+texture = ExtResource("4_dlkrt")
+offset = Vector2(0, -16)
+flip_h = true
+hframes = 4
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0amuc")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_q86ed")

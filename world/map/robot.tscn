@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdl7jak15b1nx"]
+
+[ext_resource type="Texture2D" uid="uid://dxinnxt2rq04n" path="res://assets/art/Robot.png" id="1_8itnp"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="1_c2n7g"]
+[ext_resource type="Script" path="res://world/map/robot.gd" id="1_qxvnx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gnypd"]
+radius = 5.0
+height = 14.0
+
+[node name="Robot" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_qxvnx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_gnypd")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-0.5, -1)
+texture = ExtResource("1_c2n7g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8itnp")
+offset = Vector2(-1, -16)
+hframes = 2
+
+[node name="Shadow" type="Sprite2D" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+position = Vector2(-13, -1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_c2n7g")
+
+[node name="Shadow2" type="Sprite2D" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+position = Vector2(-4, -1)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_c2n7g")
+offset = Vector2(0.5, 0)
+
+[node name="Shadow3" type="Sprite2D" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+position = Vector2(9, -1)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_c2n7g")

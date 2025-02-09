@@ -7,11 +7,9 @@ func enter(_previous_state : State) -> void:
 
 
 func physics_update(_delta : float) -> void:
-	var click_location := player.get_click_location()
-	if not click_location == Vector2.ZERO: 
-		player.target_location = click_location
-		enter(self)
-	 
 	player.move_and_slide()
 	
-	if player.is_target_location_reached(): state_transition.emit("idle")
+	if Input.is_action_just_pressed("click"): 
+		player.target_location = player.get_global_mouse_position()
+		state_transition.emit("walk")
+	if player.is_target_location_reached() or player.is_object_detected(): state_transition.emit("idle")

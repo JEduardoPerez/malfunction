@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://ce2eagsyqh6q7"]
+
+[ext_resource type="PackedScene" uid="uid://dynqohq7nxad2" path="res://entity/boy/boy_npc.tscn" id="1_ht1tj"]
+[ext_resource type="Script" path="res://world/house_level_controller.gd" id="1_j8t8j"]
+[ext_resource type="PackedScene" uid="uid://cjodr1wix6a21" path="res://ui/fading_ui_layer.tscn" id="2_3ms5y"]
+[ext_resource type="PackedScene" uid="uid://cn0s5p2j4l8yb" path="res://entity/girl/girl_npc.tscn" id="2_473vc"]
+[ext_resource type="Texture2D" uid="uid://cvhohbygkqwpb" path="res://assets/art/insidehouse.png" id="2_m5yd8"]
+[ext_resource type="PackedScene" uid="uid://dpaoi6vab80x8" path="res://world/backyard_level.tscn" id="2_qy2p1"]
+[ext_resource type="Texture2D" uid="uid://qkjpywuxwmvf" path="res://assets/art/player.png" id="3_0wbpk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s4tft"]
+atlas = ExtResource("3_0wbpk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjrwi"]
+atlas = ExtResource("3_0wbpk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puil3"]
+atlas = ExtResource("3_0wbpk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08tgh"]
+atlas = ExtResource("3_0wbpk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kbab7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s4tft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjrwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puil3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08tgh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.5
+}]
+
+[node name="HouseLevel" type="Node2D"]
+script = ExtResource("1_j8t8j")
+backyard_level = ExtResource("2_qy2p1")
+
+[node name="FadingUILayer" parent="." instance=ExtResource("2_3ms5y")]
+
+[node name="HouseSprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_m5yd8")
+centered = false
+
+[node name="Characters" type="Node2D" parent="."]
+position = Vector2(-12, -4)
+
+[node name="BoyNPC" parent="Characters" instance=ExtResource("1_ht1tj")]
+position = Vector2(126, 180)
+scale = Vector2(1.4, 1.4)
+
+[node name="Shadow" parent="Characters/BoyNPC/Body" index="0"]
+visible = false
+
+[node name="GirlNPC" parent="Characters" instance=ExtResource("2_473vc")]
+position = Vector2(93, 180)
+scale = Vector2(1.4, 1.4)
+
+[node name="Shadow" parent="Characters/GirlNPC/Body" index="0"]
+visible = false
+
+[node name="DadSprite" type="AnimatedSprite2D" parent="Characters"]
+position = Vector2(209, 180)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_kbab7")
+autoplay = "default"
+frame_progress = 0.970875
+offset = Vector2(0, -16)
+
+[editable path="Characters/BoyNPC"]
+[editable path="Characters/GirlNPC"]

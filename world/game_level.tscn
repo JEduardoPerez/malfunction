@@ -1,0 +1,126 @@
+[gd_scene load_steps=17 format=3 uid="uid://cdv3a87i76ngd"]
+
+[ext_resource type="Script" path="res://world/game_level.gd" id="1_5q4r3"]
+[ext_resource type="PackedScene" uid="uid://cjodr1wix6a21" path="res://ui/fading_ui_layer.tscn" id="2_rmw7r"]
+[ext_resource type="PackedScene" uid="uid://yb6b0xwe8btf" path="res://entity/player/player.tscn" id="3_4peek"]
+[ext_resource type="Texture2D" uid="uid://du015ety30iyh" path="res://assets/art/map/house.png" id="3_act6u"]
+[ext_resource type="PackedScene" uid="uid://bdl7jak15b1nx" path="res://world/map/robot.tscn" id="3_icbss"]
+[ext_resource type="Texture2D" uid="uid://6j23b5ajdagq" path="res://assets/art/map/patio.png" id="4_6rvpa"]
+[ext_resource type="PackedScene" uid="uid://dta35qrdcifww" path="res://world/map/carrots.tscn" id="5_njchd"]
+[ext_resource type="PackedScene" uid="uid://clhocpfnbfvc4" path="res://world/map/rock.tscn" id="7_m1n10"]
+[ext_resource type="PackedScene" uid="uid://qmqg5xcn6d0o" path="res://world/map/turtle.tscn" id="7_ugprh"]
+[ext_resource type="PackedScene" uid="uid://ba6d6ardcmabv" path="res://world/map/bush.tscn" id="9_glfqx"]
+[ext_resource type="PackedScene" uid="uid://dc5k88laoni21" path="res://world/map/fountain.tscn" id="10_sfcjg"]
+[ext_resource type="PackedScene" uid="uid://cjb64ltxfwafh" path="res://world/map/shaking_bush.tscn" id="12_ake2w"]
+[ext_resource type="PackedScene" uid="uid://dynqohq7nxad2" path="res://entity/boy/boy_npc.tscn" id="13_0g57q"]
+[ext_resource type="PackedScene" uid="uid://cn0s5p2j4l8yb" path="res://entity/girl/girl_npc.tscn" id="14_g7gwk"]
+[ext_resource type="PackedScene" uid="uid://bvvc58htxgchg" path="res://entity/dog/dog.tscn" id="15_tlamt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7igql"]
+size = Vector2(320, 39)
+
+[node name="GameLevel" type="Node2D"]
+script = ExtResource("1_5q4r3")
+
+[node name="FadingUILayer" parent="." instance=ExtResource("2_rmw7r")]
+
+[node name="BackgroundYard" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundYard"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.388235, 0.780392, 0.301961, 1)
+
+[node name="MapBackground" type="Node2D" parent="."]
+z_index = -100
+
+[node name="Sprite2D2" type="Sprite2D" parent="MapBackground"]
+position = Vector2(99, 39)
+texture = ExtResource("4_6rvpa")
+offset = Vector2(-0.5, 0.74)
+
+[node name="Sprite2D" type="Sprite2D" parent="MapBackground"]
+texture = ExtResource("3_act6u")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 24.3015, 320, 39.6985)
+
+[node name="Carrots" parent="MapBackground" instance=ExtResource("5_njchd")]
+position = Vector2(21, 131)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MapBackground"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBackground/StaticBody2D"]
+position = Vector2(160, 19.5)
+shape = SubResource("RectangleShape2D_7igql")
+
+[node name="Bush" parent="MapBackground" instance=ExtResource("9_glfqx")]
+position = Vector2(7.5, 56)
+
+[node name="MapObjects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Robot" parent="MapObjects" instance=ExtResource("3_icbss")]
+position = Vector2(194, 118)
+
+[node name="Player" parent="MapObjects" instance=ExtResource("3_4peek")]
+position = Vector2(137, 72)
+
+[node name="Rock" parent="MapObjects" instance=ExtResource("7_m1n10")]
+position = Vector2(256, 44)
+
+[node name="Rock2" parent="MapObjects" instance=ExtResource("7_m1n10")]
+position = Vector2(303, 143)
+frame = 2
+
+[node name="Shadow" parent="MapObjects/Rock2" index="0"]
+scale = Vector2(1.2, 1)
+
+[node name="Rock3" parent="MapObjects" instance=ExtResource("7_m1n10")]
+position = Vector2(303, 96)
+frame = 1
+
+[node name="Shadow" parent="MapObjects/Rock3" index="0"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Rock5" parent="MapObjects" instance=ExtResource("7_m1n10")]
+position = Vector2(211, 42)
+scale = Vector2(-1, 1)
+frame = 1
+
+[node name="Shadow" parent="MapObjects/Rock5" index="0"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Rock4" parent="MapObjects" instance=ExtResource("7_m1n10")]
+position = Vector2(170, 44)
+flip_h = true
+
+[node name="Turtle" parent="MapObjects" instance=ExtResource("7_ugprh")]
+position = Vector2(306, 139)
+frame_progress = 0.0664512
+flip_h = true
+
+[node name="Fountain" parent="MapObjects" instance=ExtResource("10_sfcjg")]
+position = Vector2(157, 148)
+
+[node name="ShakingBush" parent="MapObjects" instance=ExtResource("12_ake2w")]
+position = Vector2(28, 61)
+
+[node name="BoyNPC" parent="MapObjects" instance=ExtResource("13_0g57q")]
+position = Vector2(189, 72)
+
+[node name="GirlNPC" parent="MapObjects" instance=ExtResource("14_g7gwk")]
+position = Vector2(214, 108)
+
+[node name="Dog" parent="MapObjects" instance=ExtResource("15_tlamt")]
+position = Vector2(123, 72)
+scale = Vector2(0.5, 0.5)
+
+[editable path="MapObjects/Rock2"]
+[editable path="MapObjects/Rock3"]
+[editable path="MapObjects/Rock5"]
