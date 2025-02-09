@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=3 uid="uid://dphc0sy8pwe84"]
+
+[ext_resource type="Script" path="res://entity/dog/ball.gd" id="1_6srs8"]
+[ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="2_4k256"]
+[ext_resource type="Texture2D" uid="uid://c0ep0ca2edvkq" path="res://assets/art/ball.png" id="2_bwd43"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mu6ak"]
+radius = 16.0
+
+[sub_resource type="Animation" id="Animation_0uvlk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ettxt"]
+resource_name = "idle"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jl8ek"]
+resource_name = "shine"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_knxwv"]
+_data = {
+"RESET": SubResource("Animation_0uvlk"),
+"idle": SubResource("Animation_ettxt"),
+"shine": SubResource("Animation_jl8ek")
+}
+
+[node name="Ball" type="Node2D"]
+script = ExtResource("1_6srs8")
+
+[node name="TriggerBall" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerBall"]
+shape = SubResource("CircleShape2D_mu6ak")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(0, 2)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_4k256")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bwd43")
+hframes = 4
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_knxwv")
+}
+
+[node name="ShineTimer" type="Timer" parent="."]
+one_shot = true

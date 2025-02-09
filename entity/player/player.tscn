@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://yb6b0xwe8btf"]
+[gd_scene load_steps=21 format=3 uid="uid://yb6b0xwe8btf"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_555tw"]
 [ext_resource type="Script" path="res://utils/state_machine.gd" id="2_7ixcf"]
@@ -7,7 +7,10 @@
 [ext_resource type="Script" path="res://entity/player/states/player_throw.gd" id="5_k0jqn"]
 [ext_resource type="Script" path="res://entity/player/states/player_fixing.gd" id="6_l4154"]
 [ext_resource type="Texture2D" uid="uid://qkjpywuxwmvf" path="res://assets/art/player.png" id="7_8xowe"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="7_54mra"]
 [ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="7_hbe21"]
+[ext_resource type="AudioStream" uid="uid://dk03sc7buk1vh" path="res://assets/sounds/Steps.wav" id="8_4uywo"]
+[ext_resource type="AudioStream" uid="uid://bt8qmg2msoerw" path="res://assets/sounds/metal-hit.mp3" id="9_4asbp"]
 
 [sub_resource type="Animation" id="Animation_j5wap"]
 length = 0.001
@@ -26,8 +29,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_7hctd"]
 resource_name = "fixing"
-length = 1.05
-step = 0.15
+length = 2.0
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,10 +38,36 @@ tracks/0/path = NodePath("Body/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [20, 21, 20, 21, 20, 21, 20]
+"values": [20, 21, 20, 21, 20, 21, 20, 21, 20, 21]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Hammer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_fxw41"]
@@ -79,7 +108,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_ntrwe"]
 resource_name = "throw"
-length = 0.6
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -88,10 +116,24 @@ tracks/0/path = NodePath("Body/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [9, 10, 11, 10, 9]
+"values": [8, 9, 10, 11, 10]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"create_flying_ball"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_pxred"]
@@ -106,10 +148,27 @@ tracks/0/path = NodePath("Body/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.142857, 0.285714, 0.428571),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [12, 13, 12, 14]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Step")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_0y6uy"]
@@ -129,6 +188,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [16, 17, 16, 18]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Step")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.285714),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0768u"]
 _data = {
@@ -145,7 +221,7 @@ _data = {
 radius = 5.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_555tw")
@@ -167,6 +243,16 @@ script = ExtResource("5_k0jqn")
 [node name="Fixing" type="Node" parent="FSM"]
 script = ExtResource("6_l4154")
 
+[node name="SFXs" type="Node" parent="."]
+
+[node name="Step" parent="SFXs" instance=ExtResource("7_54mra")]
+stream = ExtResource("8_4uywo")
+volume_db = 16.0
+
+[node name="Hammer" parent="SFXs" instance=ExtResource("7_54mra")]
+stream = ExtResource("9_4asbp")
+volume_db = -6.0
+
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Shadow" type="Sprite2D" parent="Body"]
@@ -180,17 +266,20 @@ offset = Vector2(0, -16)
 hframes = 4
 vframes = 6
 
+[node name="ReleaseBallMarker" type="Marker2D" parent="Body"]
+position = Vector2(-8, 0)
+
 [node name="ObjectDetector" type="RayCast2D" parent="."]
 target_position = Vector2(12, 0)
 collision_mask = 5
 
 [node name="ObjectDetector2" type="RayCast2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -3)
 target_position = Vector2(12, 0)
 collision_mask = 5
 
 [node name="ObjectDetector3" type="RayCast2D" parent="."]
-position = Vector2(0, 5)
+position = Vector2(0, 3)
 target_position = Vector2(12, 0)
 collision_mask = 5
 
@@ -201,4 +290,3 @@ libraries = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_j7lso")
-disabled = true

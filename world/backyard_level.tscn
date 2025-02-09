@@ -170,6 +170,7 @@ texture = ExtResource("5_j8mg1")
 [node name="Dog" parent="MapObjects" instance=ExtResource("8_sipr5")]
 position = Vector2(123, 72)
 scale = Vector2(0.5, 0.5)
+is_intro_scenes = true
 
 [editable path="MapObjects/Rock2"]
 [editable path="MapObjects/Rock3"]

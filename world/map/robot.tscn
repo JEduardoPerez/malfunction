@@ -1,20 +1,124 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdl7jak15b1nx"]
+[gd_scene load_steps=13 format=3 uid="uid://bdl7jak15b1nx"]
 
 [ext_resource type="Texture2D" uid="uid://dxinnxt2rq04n" path="res://assets/art/Robot.png" id="1_8itnp"]
 [ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="1_c2n7g"]
 [ext_resource type="Script" path="res://world/map/robot.gd" id="1_qxvnx"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="2_qp08e"]
+[ext_resource type="AudioStream" uid="uid://bkdlqac1uqwkh" path="res://assets/sounds/robot_up1.mp3" id="3_ng67v"]
+[ext_resource type="AudioStream" uid="uid://c3bwh67fvg0ng" path="res://assets/sounds/robot_up2.mp3" id="4_0alh5"]
+[ext_resource type="Texture2D" uid="uid://b0ok4mae5gpbh" path="res://assets/art/exclamation.png" id="4_qa04l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhf4x"]
+radius = 17.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gnypd"]
-radius = 5.0
-height = 14.0
+radius = 4.0
+height = 16.0
+
+[sub_resource type="Animation" id="Animation_d13dt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cvp36"]
+resource_name = "idle"
+length = 6.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0349066, 0.0, -0.0349066, 0.0, 0.0349066, 0.0, -0.0349066, 0.0, 0.0349066, 0.0, -0.0349066, 0.0, 0.0349066, 0.0, -0.0349066]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 0), Vector2(0, -1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.1, 5.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6gnll"]
+_data = {
+"RESET": SubResource("Animation_d13dt"),
+"idle": SubResource("Animation_cvp36")
+}
 
 [node name="Robot" type="StaticBody2D"]
 collision_mask = 0
 script = ExtResource("1_qxvnx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CapsuleShape2D_gnypd")
+[node name="SFXs" type="Node" parent="."]
+
+[node name="RobotUp" parent="SFXs" instance=ExtResource("2_qp08e")]
+stream = ExtResource("3_ng67v")
+
+[node name="RobotUp2" parent="SFXs" instance=ExtResource("2_qp08e")]
+stream = ExtResource("4_0alh5")
+
+[node name="RepairArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RepairArea"]
+shape = SubResource("CircleShape2D_mhf4x")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.392157)
@@ -50,3 +154,18 @@ show_behind_parent = true
 position = Vector2(9, -1)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_c2n7g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_gnypd")
+
+[node name="Exclamation" type="Sprite2D" parent="."]
+position = Vector2(0, -21)
+texture = ExtResource("4_qa04l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Exclamation"]
+libraries = {
+"": SubResource("AnimationLibrary_6gnll")
+}
+autoplay = "idle"
+speed_scale = 2.0

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://ni2irph5iqog"]
+
+[ext_resource type="Texture2D" uid="uid://crbrtdpn0vr0e" path="res://assets/art/cursor.png" id="1_lpem5"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="1_pvs1f"]
+[ext_resource type="Script" path="res://ui/cursor.gd" id="2_7rnrl"]
+[ext_resource type="AudioStream" uid="uid://dctih5olvapow" path="res://assets/sounds/Click.wav" id="2_t0njj"]
+
+[node name="CursorLayer" type="CanvasLayer"]
+layer = 128
+
+[node name="Click" parent="." instance=ExtResource("1_pvs1f")]
+stream = ExtResource("2_t0njj")
+volume_db = -28.0
+pitch_scale = 2.0
+pitch_jitter = 0.01
+
+[node name="Cursor" type="Sprite2D" parent="."]
+z_index = 100
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_lpem5")
+offset = Vector2(3, 11)
+hframes = 2
+script = ExtResource("2_7rnrl")
+
+[node name="ClickTimer" type="Timer" parent="Cursor"]
+wait_time = 0.1
+one_shot = true

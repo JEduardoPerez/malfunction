@@ -1,10 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://cdv3a87i76ngd"]
+[gd_scene load_steps=35 format=3 uid="uid://cdv3a87i76ngd"]
 
 [ext_resource type="Script" path="res://world/game_level.gd" id="1_5q4r3"]
+[ext_resource type="Texture2D" uid="uid://q1txexo23nao" path="res://assets/art/hammer.png" id="2_j7w34"]
 [ext_resource type="PackedScene" uid="uid://cjodr1wix6a21" path="res://ui/fading_ui_layer.tscn" id="2_rmw7r"]
 [ext_resource type="PackedScene" uid="uid://yb6b0xwe8btf" path="res://entity/player/player.tscn" id="3_4peek"]
 [ext_resource type="Texture2D" uid="uid://du015ety30iyh" path="res://assets/art/map/house.png" id="3_act6u"]
 [ext_resource type="PackedScene" uid="uid://bdl7jak15b1nx" path="res://world/map/robot.tscn" id="3_icbss"]
+[ext_resource type="FontFile" uid="uid://dxxaym28p8pa4" path="res://assets/font/Early GameBoy.ttf" id="3_ihbdo"]
 [ext_resource type="Texture2D" uid="uid://6j23b5ajdagq" path="res://assets/art/map/patio.png" id="4_6rvpa"]
 [ext_resource type="PackedScene" uid="uid://dta35qrdcifww" path="res://world/map/carrots.tscn" id="5_njchd"]
 [ext_resource type="PackedScene" uid="uid://clhocpfnbfvc4" path="res://world/map/rock.tscn" id="7_m1n10"]
@@ -15,12 +17,124 @@
 [ext_resource type="PackedScene" uid="uid://dynqohq7nxad2" path="res://entity/boy/boy_npc.tscn" id="13_0g57q"]
 [ext_resource type="PackedScene" uid="uid://cn0s5p2j4l8yb" path="res://entity/girl/girl_npc.tscn" id="14_g7gwk"]
 [ext_resource type="PackedScene" uid="uid://bvvc58htxgchg" path="res://entity/dog/dog.tscn" id="15_tlamt"]
+[ext_resource type="PackedScene" uid="uid://8qdpebbnyt71" path="res://collectables/collected_piece.tscn" id="16_3x27p"]
+[ext_resource type="PackedScene" uid="uid://bilp42cjdpogp" path="res://collectables/piece.tscn" id="16_cslwc"]
+[ext_resource type="PackedScene" uid="uid://dphc0sy8pwe84" path="res://entity/dog/ball.tscn" id="19_tk51e"]
+[ext_resource type="AudioStream" uid="uid://bh78sakjwbu4v" path="res://assets/music/game_music.mp3" id="21_04jvy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bjqac"]
+font = ExtResource("3_ihbdo")
+font_size = 8
+
+[sub_resource type="Animation" id="Animation_plg3v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sdpmj"]
+resource_name = "fix"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_27pia"]
+resource_name = "no_fix"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_moogm"]
+_data = {
+"RESET": SubResource("Animation_plg3v"),
+"fix": SubResource("Animation_sdpmj"),
+"no_fix": SubResource("Animation_27pia")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7igql"]
 size = Vector2(320, 39)
 
-[node name="GameLevel" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2visv"]
+size = Vector2(14, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxo4h"]
+size = Vector2(19, 90.5625)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3r3ea"]
+size = Vector2(77.5, 21.2813)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxqgv"]
+size = Vector2(14, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4gfg"]
+size = Vector2(9.5, 141.281)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_okvpk"]
+size = Vector2(340, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vmth"]
+size = Vector2(32, 27)
+
+[node name="GameLevel" type="Node2D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_5q4r3")
+player = NodePath("MapObjects/Player")
+
+[node name="FixUI" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FixUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_bottom = 16.0
+grow_horizontal = 0
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="FixUI/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_j7w34")
+
+[node name="PartAmount" type="Label" parent="FixUI/HBoxContainer"]
+layout_mode = 2
+text = "repair"
+label_settings = SubResource("LabelSettings_bjqac")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FixUI"]
+libraries = {
+"": SubResource("AnimationLibrary_moogm")
+}
+autoplay = "no_fix"
+speed_scale = 0.5
 
 [node name="FadingUILayer" parent="." instance=ExtResource("2_rmw7r")]
 
@@ -33,7 +147,66 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.388235, 0.780392, 0.301961, 1)
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_04jvy")
+
+[node name="CollidersBody" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(160, 19.5)
+shape = SubResource("RectangleShape2D_7igql")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(170, 41.5)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(210, 40)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(273, 41)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(304, 94)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(303, 140)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(305, 136)
+shape = SubResource("RectangleShape2D_2visv")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(9.5, 134)
+shape = SubResource("RectangleShape2D_pxo4h")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(19, 45)
+shape = SubResource("RectangleShape2D_3r3ea")
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(156, 147)
+shape = SubResource("RectangleShape2D_qxqgv")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(323.25, 108.641)
+shape = SubResource("RectangleShape2D_l4gfg")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(-4, 108.641)
+shape = SubResource("RectangleShape2D_l4gfg")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="CollidersBody"]
+position = Vector2(158, 181)
+shape = SubResource("RectangleShape2D_okvpk")
 
 [node name="MapBackground" type="Node2D" parent="."]
 z_index = -100
@@ -52,13 +225,6 @@ region_rect = Rect2(0, 24.3015, 320, 39.6985)
 [node name="Carrots" parent="MapBackground" instance=ExtResource("5_njchd")]
 position = Vector2(21, 131)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="MapBackground"]
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBackground/StaticBody2D"]
-position = Vector2(160, 19.5)
-shape = SubResource("RectangleShape2D_7igql")
-
 [node name="Bush" parent="MapBackground" instance=ExtResource("9_glfqx")]
 position = Vector2(7.5, 56)
 
@@ -72,7 +238,7 @@ position = Vector2(194, 118)
 position = Vector2(137, 72)
 
 [node name="Rock" parent="MapObjects" instance=ExtResource("7_m1n10")]
-position = Vector2(256, 44)
+position = Vector2(273, 44)
 
 [node name="Rock2" parent="MapObjects" instance=ExtResource("7_m1n10")]
 position = Vector2(303, 143)
@@ -117,10 +283,85 @@ position = Vector2(189, 72)
 [node name="GirlNPC" parent="MapObjects" instance=ExtResource("14_g7gwk")]
 position = Vector2(214, 108)
 
-[node name="Dog" parent="MapObjects" instance=ExtResource("15_tlamt")]
+[node name="Dog" parent="MapObjects" node_paths=PackedStringArray("target_locations", "final_target_location") instance=ExtResource("15_tlamt")]
 position = Vector2(123, 72)
 scale = Vector2(0.5, 0.5)
+target_locations = [NodePath("../../DogMarkers/Marker2D"), NodePath("../../DogMarkers/Marker2D2"), NodePath("../../DogMarkers/Marker2D3"), NodePath("../../DogMarkers/Marker2D4"), NodePath("../../DogMarkers/Marker2D5"), NodePath("../../DogMarkers/Marker2D6"), NodePath("../../DogMarkers/Marker2D7"), NodePath("../../DogMarkers/Marker2D8")]
+final_target_location = NodePath("../../DogMarkers/FinalMarker")
+
+[node name="Piece" parent="MapObjects" node_paths=PackedStringArray("collect_piece") instance=ExtResource("16_cslwc")]
+position = Vector2(29, 54)
+part_piece = 1
+collect_piece = NodePath("../../Pieces/CollectedPiece")
+explinatory_animation = "side"
+
+[node name="Piece2" parent="MapObjects" node_paths=PackedStringArray("collect_piece") instance=ExtResource("16_cslwc")]
+position = Vector2(306, 47)
+collect_piece = NodePath("../../Pieces/CollectedPiece2")
+
+[node name="Piece3" parent="MapObjects" node_paths=PackedStringArray("collect_piece") instance=ExtResource("16_cslwc")]
+position = Vector2(234, 156)
+part_piece = 2
+collect_piece = NodePath("../../Pieces/CollectedPiece4")
+
+[node name="Piece4" parent="MapObjects" node_paths=PackedStringArray("collect_piece", "fountain") instance=ExtResource("16_cslwc")]
+position = Vector2(156, 131)
+part_piece = 3
+collect_piece = NodePath("../../Pieces/CollectedPiece3")
+explinatory_animation = "vertical"
+fountain = NodePath("../Fountain")
+
+[node name="CollisionShape2D" parent="MapObjects/Piece4" index="0"]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_2vmth")
+
+[node name="Ball" parent="MapObjects" instance=ExtResource("19_tk51e")]
+position = Vector2(244, 42)
+
+[node name="Pieces" type="Node2D" parent="."]
+
+[node name="CollectedPiece" parent="Pieces" instance=ExtResource("16_3x27p")]
+position = Vector2(29, 54)
+
+[node name="CollectedPiece2" parent="Pieces" instance=ExtResource("16_3x27p")]
+position = Vector2(306, 47)
+
+[node name="CollectedPiece3" parent="Pieces" instance=ExtResource("16_3x27p")]
+position = Vector2(156, 131)
+
+[node name="CollectedPiece4" parent="Pieces" instance=ExtResource("16_3x27p")]
+position = Vector2(234, 156)
+
+[node name="DogMarkers" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="DogMarkers"]
+position = Vector2(63, 127)
+
+[node name="Marker2D2" type="Marker2D" parent="DogMarkers"]
+position = Vector2(162, 87)
+
+[node name="Marker2D3" type="Marker2D" parent="DogMarkers"]
+position = Vector2(274, 147)
+
+[node name="Marker2D4" type="Marker2D" parent="DogMarkers"]
+position = Vector2(145, 167)
+
+[node name="Marker2D5" type="Marker2D" parent="DogMarkers"]
+position = Vector2(102, 94)
+
+[node name="Marker2D6" type="Marker2D" parent="DogMarkers"]
+position = Vector2(242, 92)
+
+[node name="Marker2D7" type="Marker2D" parent="DogMarkers"]
+position = Vector2(219, 162)
+
+[node name="Marker2D8" type="Marker2D" parent="DogMarkers"]
+position = Vector2(95, 157)
+
+[node name="FinalMarker" type="Marker2D" parent="DogMarkers"]
+position = Vector2(236, 139)
 
 [editable path="MapObjects/Rock2"]
 [editable path="MapObjects/Rock3"]
 [editable path="MapObjects/Rock5"]
+[editable path="MapObjects/Piece4"]

@@ -17,6 +17,13 @@ func fade_in() -> Tween:
 	return tween
 
 
+func fade_in_slow() -> Tween: 
+	var tween := create_tween()
+	color_rect.color = Color(0,0,0,0)
+	tween.tween_property(color_rect, "color:a", 1, fade_length*3)
+	return tween
+
+
 func fade_out() -> Tween: 
 	var tween := create_tween()
 	color_rect.color = Color(0,0,0,1)

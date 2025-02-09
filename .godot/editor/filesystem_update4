@@ -14,4 +14,11 @@ res://world/map/bush.tscn
 res://world/map/fountain.tscn
 res://world/map/carrots.tscn
 res://world/map/shaking_bush.tscn
-res://world/game_level.gd
+res://screens/credit_screen.tscn
+res://ui/cursor.tscn
+res://collectables/collected_piece.tscn
+res://screens/title_screen.tscn
+res://ui/cursor_explinatory.tscn
+res://collectables/piece.tscn
+res://entity/dog/ball.tscn
+res://entity/dog/flying_ball.tscn

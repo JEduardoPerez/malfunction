@@ -9,6 +9,8 @@ extends CanvasLayer
 @onready var display_label: Label = $TextureRect/MarginContainer/DisplayLabel
 @onready var character_timer: Timer = $CharacterTimer
 @onready var texture_rect: TextureRect = $TextureRect/MarginContainer/MarginContainer/TextureRect
+@onready var character_sfx: ExtendedAudioStreamPlayer = $CharacterSFX
+@onready var character_sfx_timer: Timer = $CharacterSFXTimer
 
 var dialogue_array : Array[String]
 
@@ -19,6 +21,7 @@ signal dialogue_completed
 
 func _ready() -> void:
 	character_timer.timeout.connect(_on_character_timer_timeout)
+	character_sfx_timer.timeout.connect(_on_character_sfx_timer_timeout)
 
 
 func _process(_delta: float) -> void:
@@ -26,6 +29,7 @@ func _process(_delta: float) -> void:
 		if character_timer.is_stopped(): next_line()
 		else:
 			character_timer.stop()
+			character_sfx_timer.stop()
 			display_label.visible_ratio = 1
 
 
@@ -40,6 +44,7 @@ func next_line() -> void:
 		display_label.text = dialogue_array.pop_front()
 		display_label.visible_ratio = 0
 		character_timer.start()
+		character_sfx_timer.start()
 	else:
 		display_label.text = "" 
 		close_dialogue()
@@ -68,5 +73,12 @@ func dialogue_out() -> void:
 
 
 func _on_character_timer_timeout() -> void: 
-	if display_label.visible_ratio < 1: display_label.visible_characters += 1
-	else: character_timer.stop()
+	if display_label.visible_ratio < 1: 
+		display_label.visible_characters += 1
+	else: 
+		character_timer.stop()
+		character_sfx_timer.stop()
+
+
+func _on_character_sfx_timer_timeout() -> void: 
+	character_sfx.play_at_random_pitch()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cn0s5p2j4l8yb"]
+[gd_scene load_steps=25 format=3 uid="uid://cn0s5p2j4l8yb"]
 
 [ext_resource type="Script" path="res://entity/girl/girl_npc.gd" id="1_4tk2n"]
 [ext_resource type="Script" path="res://utils/state_machine.gd" id="2_moivs"]
@@ -9,6 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://dunonclpu0vee" path="res://assets/art/shadow.png" id="7_fgvoc"]
 [ext_resource type="Script" path="res://entity/girl/states/girl_break.gd" id="7_lxhnn"]
 [ext_resource type="Texture2D" uid="uid://bdgsw26bni34p" path="res://assets/art/girl_npc.png" id="8_reoji"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="10_sihwd"]
+[ext_resource type="AudioStream" uid="uid://bvg16oco2wvns" path="res://assets/sounds/punch.mp3" id="11_q4lba"]
+[ext_resource type="AudioStream" uid="uid://bu43oy0plam1x" path="res://assets/sounds/robot_off.mp3" id="12_avt7b"]
+[ext_resource type="AudioStream" uid="uid://copjsksafyeh7" path="res://assets/sounds/robot_break.mp3" id="13_h2tth"]
+[ext_resource type="AudioStream" uid="uid://dk03sc7buk1vh" path="res://assets/sounds/Steps.wav" id="13_kbngo"]
+[ext_resource type="AudioStream" uid="uid://bh8uxtvofu47y" path="res://assets/sounds/celebrate.mp3" id="15_la64t"]
 
 [sub_resource type="Animation" id="Animation_hjq11"]
 length = 0.001
@@ -41,6 +47,34 @@ tracks/0/keys = {
 "update": 1,
 "values": [27, 28, 29, 30, 31]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/RobotBreak")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFXs/RobotOffSFX")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_etrm2"]
 resource_name = "celebrate"
@@ -58,6 +92,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [16, 17, 18, 19, 18]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Celebrate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_kjuiu"]
@@ -126,6 +174,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [27, 28]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Punch")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_p3fkr"]
 resource_name = "walk"
@@ -144,6 +206,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [8, 9, 10, 11]
 }
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXs/Step")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.285714),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_at_random_pitch"
+}, {
+"args": [],
+"method": &"play_at_random_pitch"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n68pr"]
 _data = {
@@ -157,8 +236,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i8rev"]
-radius = 5.0
-height = 14.0
+radius = 3.0
+height = 10.0
 
 [node name="GirlNPC" type="CharacterBody2D" groups=["NPC"]]
 motion_mode = 1
@@ -203,3 +282,21 @@ speed_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_i8rev")
+
+[node name="SFXs" type="Node" parent="."]
+
+[node name="Punch" parent="SFXs" instance=ExtResource("10_sihwd")]
+stream = ExtResource("11_q4lba")
+
+[node name="RobotOffSFX" parent="SFXs" instance=ExtResource("10_sihwd")]
+stream = ExtResource("12_avt7b")
+
+[node name="RobotBreak" parent="SFXs" instance=ExtResource("10_sihwd")]
+stream = ExtResource("13_h2tth")
+
+[node name="Step" parent="SFXs" instance=ExtResource("10_sihwd")]
+stream = ExtResource("13_kbngo")
+
+[node name="Celebrate" parent="SFXs" instance=ExtResource("10_sihwd")]
+stream = ExtResource("15_la64t")
+volume_db = -8.0

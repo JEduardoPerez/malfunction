@@ -1,13 +1,19 @@
+C:/Users/eduar/Documents/_Development/Godot Projects/Godot 4.3/malfunction/build/windows/1.1
+C:/Users/eduar/Documents/_Development/Godot Projects/Godot 4.3/malfunction/build/web/1.1
+C:/Users/eduar/Documents/_Development/Godot Projects/Godot 4.3/malfunction/build/windows
+C:/Users/eduar/Documents/_Development/Godot Projects/Godot 4.3/malfunction/build/web
+res://entity/dog/states
+res://entity/dog
+res://ui
+res://assets/art
+res://collectables
+res://screens
 res://world/map
 res://assets/art/map
 res://entity/girl/states
-res://assets/art
 res://world
-res://ui
 res://dialogue
-res://entity/dog/states
 res://utils
-res://entity/dog
 res://entity/player/states
 res://entity/girl
 res://entity/boy/states

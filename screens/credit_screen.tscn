@@ -1,0 +1,143 @@
+[gd_scene load_steps=12 format=3 uid="uid://bwth1ylcg5k6r"]
+
+[ext_resource type="PackedScene" uid="uid://cjodr1wix6a21" path="res://ui/fading_ui_layer.tscn" id="1_8cy5g"]
+[ext_resource type="Script" path="res://screens/credit_screen.gd" id="1_jjdxw"]
+[ext_resource type="Texture2D" uid="uid://cuqlvytaof080" path="res://assets/art/creditsscreen.png" id="2_6bns0"]
+[ext_resource type="FontFile" uid="uid://dxxaym28p8pa4" path="res://assets/font/Early GameBoy.ttf" id="2_48ei5"]
+[ext_resource type="PackedScene" uid="uid://qmqg5xcn6d0o" path="res://world/map/turtle.tscn" id="5_dnque"]
+[ext_resource type="Texture2D" uid="uid://q1txexo23nao" path="res://assets/art/hammer.png" id="6_emlyw"]
+[ext_resource type="AudioStream" uid="uid://ca7ydebvtvphx" path="res://assets/music/credits_music.mp3" id="7_4mws3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gg64p"]
+line_spacing = 1.0
+font = ExtResource("2_48ei5")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_3smqp"]
+line_spacing = 1.0
+font = ExtResource("2_48ei5")
+
+[sub_resource type="LabelSettings" id="LabelSettings_yt81j"]
+font = ExtResource("2_48ei5")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_mo6ny"]
+line_spacing = 1.0
+font = ExtResource("2_48ei5")
+font_size = 6
+
+[node name="CreditScreen" type="Node2D"]
+script = ExtResource("1_jjdxw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6bns0")
+centered = false
+
+[node name="FadingUILayer" parent="." instance=ExtResource("1_8cy5g")]
+
+[node name="CreditsUI" type="CanvasLayer" parent="."]
+
+[node name="ThankyouLabel" type="Label" parent="CreditsUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -43.0
+offset_right = 92.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "thank you for playing"
+label_settings = SubResource("LabelSettings_gg64p")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TheEnd" type="Label" parent="CreditsUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -17.0
+offset_right = 92.0
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "the end"
+label_settings = SubResource("LabelSettings_3smqp")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="MadeByLabel" type="Label" parent="CreditsUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = 3.0
+offset_right = 102.0
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "game made by:
+"
+label_settings = SubResource("LabelSettings_yt81j")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TaskLabel" type="Label" parent="CreditsUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = 20.0
+offset_right = 102.0
+offset_bottom = 138.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_mo6ny")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NameLabel" type="Label" parent="CreditsUI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = 29.0
+offset_right = 102.0
+offset_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_mo6ny")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Turtle" parent="." instance=ExtResource("5_dnque")]
+position = Vector2(71, 145)
+scale = Vector2(2, 2)
+
+[node name="Shadow" parent="Turtle" index="0"]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(265, 49)
+texture = ExtResource("6_emlyw")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(62, 49)
+texture = ExtResource("6_emlyw")
+flip_h = true
+
+[node name="CreditsMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_4mws3")
+
+[editable path="Turtle"]

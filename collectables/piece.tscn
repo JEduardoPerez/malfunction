@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bilp42cjdpogp"]
+
+[ext_resource type="Script" path="res://collectables/piece.gd" id="1_fbppw"]
+[ext_resource type="Texture2D" uid="uid://cuv81w4q6uqg0" path="res://assets/art/pieces.png" id="2_5wy4f"]
+[ext_resource type="PackedScene" uid="uid://cmop0iieoic1p" path="res://ui/cursor_explinatory.tscn" id="3_3xf7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef1fb"]
+size = Vector2(22, 23)
+
+[node name="Piece" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_fbppw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6.5)
+shape = SubResource("RectangleShape2D_ef1fb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5wy4f")
+hframes = 4
+
+[node name="CursorExplinatory" parent="." instance=ExtResource("3_3xf7j")]
+position = Vector2(0, -34)

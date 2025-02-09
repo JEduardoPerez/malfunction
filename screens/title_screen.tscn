@@ -1,0 +1,80 @@
+[gd_scene load_steps=15 format=3 uid="uid://bjfqsgqdfbwnm"]
+
+[ext_resource type="Script" path="res://screens/title_screen.gd" id="1_oltfp"]
+[ext_resource type="PackedScene" uid="uid://ce2eagsyqh6q7" path="res://world/house_level.tscn" id="2_874nt"]
+[ext_resource type="PackedScene" uid="uid://cjodr1wix6a21" path="res://ui/fading_ui_layer.tscn" id="2_flpky"]
+[ext_resource type="Texture2D" uid="uid://d2cmq3b3birjb" path="res://assets/art/titlescreen.png" id="4_1i2h0"]
+[ext_resource type="FontFile" uid="uid://dxxaym28p8pa4" path="res://assets/font/Early GameBoy.ttf" id="5_p1dx8"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="6_gpgmw"]
+[ext_resource type="AudioStream" uid="uid://bvnogjrebj36a" path="res://assets/sounds/game-start.mp3" id="7_lpi4g"]
+[ext_resource type="AudioStream" uid="uid://c3306qnxnv3xp" path="res://assets/music/title_music.mp3" id="8_43uv7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gugn3"]
+atlas = ExtResource("4_1i2h0")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_veeut"]
+atlas = ExtResource("4_1i2h0")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lf33"]
+atlas = ExtResource("4_1i2h0")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bp1mo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gugn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_veeut")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lf33")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ycru"]
+size = Vector2(108, 24)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j6g00"]
+font = ExtResource("5_p1dx8")
+font_size = 8
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_oltfp")
+house_level = ExtResource("2_874nt")
+
+[node name="FadingUILayer" parent="." instance=ExtResource("2_flpky")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bp1mo")
+autoplay = "default"
+centered = false
+
+[node name="StartGameArea" type="Area2D" parent="."]
+position = Vector2(158, 163)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartGameArea"]
+visible = false
+shape = SubResource("RectangleShape2D_1ycru")
+
+[node name="Label" type="Label" parent="StartGameArea"]
+offset_left = -39.0
+offset_top = -12.0
+offset_right = 49.0
+offset_bottom = 11.0
+text = "Start Game"
+label_settings = SubResource("LabelSettings_j6g00")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartSFX" parent="." instance=ExtResource("6_gpgmw")]
+stream = ExtResource("7_lpi4g")
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_43uv7")

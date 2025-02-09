@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfjmbxpu122ud"]
+[gd_scene load_steps=14 format=3 uid="uid://cfjmbxpu122ud"]
 
 [ext_resource type="Script" path="res://dialogue/dialogue_box.gd" id="1_vsmll"]
 [ext_resource type="Texture2D" uid="uid://b2egfepubapfb" path="res://assets/art/dialogue_box.png" id="2_bo4h4"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://u7mw4ww2heba" path="res://assets/art/portrait_boy.png" id="3_btb1g"]
 [ext_resource type="Texture2D" uid="uid://biyj05wtcyrcm" path="res://assets/art/portrait_boy_happy.png" id="4_4t3ab"]
 [ext_resource type="Texture2D" uid="uid://w8lq8p6imvly" path="res://assets/art/portrait.png" id="4_ow15n"]
+[ext_resource type="PackedScene" uid="uid://dv85xpnjes1y7" path="res://utils/extended_audio_stream_player.tscn" id="7_o1vq0"]
+[ext_resource type="AudioStream" uid="uid://dctih5olvapow" path="res://assets/sounds/Click.wav" id="8_chj44"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nc4qv"]
 font = ExtResource("3_8er75")
@@ -115,5 +117,12 @@ libraries = {
 "": SubResource("AnimationLibrary_nmnc5")
 }
 
+[node name="CharacterSFXTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="CharacterTimer" type="Timer" parent="."]
 wait_time = 0.06
+
+[node name="CharacterSFX" parent="." instance=ExtResource("7_o1vq0")]
+stream = ExtResource("8_chj44")
+volume_db = -20.0
