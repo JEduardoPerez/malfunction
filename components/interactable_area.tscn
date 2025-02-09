@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bku2bgtpdchep"]
-
-[ext_resource type="Script" path="res://components/interactable_area.gd" id="1_nvgfi"]
-
-[node name="InteractionArea" type="Area2D"]
-collision_layer = 8
-collision_mask = 0
-monitoring = false
-script = ExtResource("1_nvgfi")
